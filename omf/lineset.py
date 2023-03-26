@@ -2,7 +2,7 @@
 import numpy as np
 import properties
 
-from .base import ProjectElement
+from .element import ProjectElement
 from .attribute import ArrayInstanceProperty
 
 

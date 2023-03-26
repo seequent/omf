@@ -2,7 +2,8 @@
 import numpy as np
 import properties
 
-from ..base import BaseModel, ProjectElement
+from ..base import BaseModel
+from ..element import ProjectElement
 from .index import ijk_to_index, index_to_ijk
 from .subblock_check import subblock_check
 from .subblocks import FreeformSubblocks, RegularSubblocks

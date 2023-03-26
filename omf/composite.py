@@ -1,7 +1,7 @@
 """composite.py: Element composed of other elements"""
 import properties
 
-from .base import ProjectElement
+from .element import ProjectElement
 from .blockmodel import BlockModel
 from .lineset import LineSet
 from .pointset import PointSet

@@ -4,7 +4,7 @@ import json
 import os
 import zipfile
 
-from .base import Project
+from .project import Project
 from . import compat
 
 __version__ = "2.0.0a0"
@@ -19,7 +19,7 @@ def save(project, filename, mode="x"):
 
     **Inputs:**
 
-    * **project** - Instance of :class:`omf.base.Project` to be saved
+    * **project** - Instance of :class:`omf.project.Project` to be saved
     * **filename** - Name and path of output OMF file. If not already present,
       ".omf" will be appended
     * **mode** - Valid values are "w" or "x" - if file exists, "w" will

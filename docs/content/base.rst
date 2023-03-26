@@ -9,12 +9,12 @@ Project Element
 Available elements are :ref:`pointsets`, :ref:`linesets`, :ref:`surfaces`,
 :ref:`blockmodels`, and :ref:`composites`; :ref:`projects` are built with elements.
 
-.. autoclass:: omf.base.ProjectElement
+.. autoclass:: omf.element.ProjectElement
 
 Project Element Attribute
 -------------------------
 
-.. autoclass:: omf.base.ProjectElementAttribute
+.. autoclass:: omf.element.ProjectElementAttribute
 
 Content Model
 -------------
@@ -29,11 +29,11 @@ Base Model
 Metadata Classes
 ----------------
 
-.. autoclass:: omf.base.ProjectMetadata
+.. autoclass:: omf.project.ProjectMetadata
 
-.. autoclass:: omf.base.ElementMetadata
+.. autoclass:: omf.element.ElementMetadata
 
-.. autoclass:: omf.base.AttributeMetadata
+.. autoclass:: omf.attribute.AttributeMetadata
 
 .. autoclass:: omf.base.BaseMetadata
 

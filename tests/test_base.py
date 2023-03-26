@@ -154,7 +154,7 @@ class MockArray(omf.base.BaseModel):
     array = np.array([1, 2, 3])
 
 
-class MockAttribute(omf.base.ProjectElementAttribute):
+class MockAttribute(omf.element.ProjectElementAttribute):
     """Test attribute class"""
 
     schema = "test.mock.attribute"
@@ -164,7 +164,7 @@ class MockAttribute(omf.base.ProjectElementAttribute):
 
 def test_project_element():
     """Test validation of element geometry and attributes"""
-    element = omf.base.ProjectElement()
+    element = omf.element.ProjectElement()
     with pytest.raises(AssertionError):
         element.validate()
     element._valid_locations = ("vertices",)  # pylint: disable=W0212

@@ -6,14 +6,14 @@ Array Types
 Array
 -----
 
-.. autoclass:: omf.attribute.Array
+.. autoclass:: omf.array.Array
 
 StringList
 ----------
 
-.. autoclass:: omf.attribute.StringList
+.. autoclass:: omf.array.StringList
 
 ArrayInstanceProperty
 ---------------------
 
-.. autoclass:: omf.attribute.ArrayInstanceProperty
+.. autoclass:: omf.array.ArrayInstanceProperty

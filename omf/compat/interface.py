@@ -1,7 +1,7 @@
 """interface.py: Interface that all OMF readers must adhere to."""
 import abc
 
-from ..base import Project
+from ..project import Project
 
 
 class WrongVersionError(ValueError):

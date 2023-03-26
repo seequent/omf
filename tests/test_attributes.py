@@ -11,7 +11,7 @@ import omf
 # pylint: disable=W0143
 def test_scalar_array():
     """Test array init and access works correctly"""
-    arr = omf.attribute.Array(np.array([1, 2, 3], dtype="uint8"))
+    arr = omf.array.Array(np.array([1, 2, 3], dtype="uint8"))
     assert arr.array.dtype.kind == "u"
     assert np.array_equal(arr.array, [1, 2, 3])
     assert arr.data_type == "Uint8Array"
@@ -27,23 +27,23 @@ def test_scalar_array():
         "size": 3,
         "array": list(binary_dict.keys())[0],
     }
-    new_arr = omf.attribute.Array.deserialize(output, binary_dict=binary_dict)
+    new_arr = omf.array.Array.deserialize(output, binary_dict=binary_dict)
     assert properties.equal(arr, new_arr)
 
 
 def test_invalid_array():
     """Test Array class without valid array"""
-    arr = omf.attribute.Array()
+    arr = omf.array.Array()
     assert arr.data_type is None
     assert arr.shape is None
     assert arr.size is None
-    assert isinstance(omf.attribute.Array.deserialize(""), omf.attribute.Array)
-    assert isinstance(omf.attribute.Array.deserialize({}), omf.attribute.Array)
+    assert isinstance(omf.array.Array.deserialize(""), omf.array.Array)
+    assert isinstance(omf.array.Array.deserialize({}), omf.array.Array)
 
 
 def test_invalid_string_list():
     """Test StringList class without valid array"""
-    arr = omf.attribute.StringList()
+    arr = omf.array.StringList()
     assert arr.data_type is None
     assert arr.shape is None
     assert arr.size is None
@@ -53,7 +53,7 @@ def test_invalid_string_list():
 
 def test_boolean_array():
     """Test boolean array bits"""
-    arr = omf.attribute.Array(np.array([[1, 1], [0, 0]], dtype="bool"))
+    arr = omf.array.Array(np.array([[1, 1], [0, 0]], dtype="bool"))
     assert arr.array.dtype.kind == "b"
     assert arr.data_type == "BooleanArray"
     assert arr.shape == [2, 2]
@@ -68,13 +68,13 @@ def test_boolean_array():
         "size": 1,
         "array": list(binary_dict.keys())[0],
     }
-    new_arr = omf.attribute.Array.deserialize(output, binary_dict=binary_dict)
+    new_arr = omf.array.Array.deserialize(output, binary_dict=binary_dict)
     assert properties.equal(arr, new_arr)
 
 
 def test_datetime_list():
     """Test string list gives datetime data_type"""
-    arr = omf.attribute.StringList(["1995-08-12T18:00:00Z", "1995-08-13T18:00:00Z"])
+    arr = omf.array.StringList(["1995-08-12T18:00:00Z", "1995-08-13T18:00:00Z"])
     assert arr.data_type == "DateTimeArray"
     assert arr.shape == [2]
     binary_dict = {}
@@ -91,7 +91,7 @@ def test_datetime_list():
 
 def test_string_list():
     """Test string list gives string data_type"""
-    arr = omf.attribute.StringList.deserialize(
+    arr = omf.array.StringList.deserialize(
         {
             "shape": "",
             "data_type": "",

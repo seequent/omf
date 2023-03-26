@@ -1,6 +1,6 @@
 """pointset.py: PointSet element definition"""
 import properties
-from .base import ProjectElement
+from .element import ProjectElement
 from .attribute import ArrayInstanceProperty
 from .texture import HasTexturesMixin
 

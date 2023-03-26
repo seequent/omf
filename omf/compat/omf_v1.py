@@ -17,7 +17,7 @@ from ..attribute import (
     StringAttribute,
     VectorAttribute,
 )
-from ..base import Project
+from ..project import Project
 from ..lineset import LineSet
 from ..pointset import PointSet
 from ..surface import Surface, TensorGridSurface
