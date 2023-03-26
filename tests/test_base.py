@@ -154,7 +154,7 @@ class MockArray(omf.base.BaseModel):
     array = np.array([1, 2, 3])
 
 
-class MockAttribute(omf.element.ProjectElementAttribute):
+class MockAttribute(omf.attribute.Attribute):
     """Test attribute class"""
 
     schema = "test.mock.attribute"

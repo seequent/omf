@@ -3,47 +3,45 @@
 Attributes
 **********
 
-ProjectElements include a list of ProjectElementAttribute. These specify mesh location
-('vertices', 'faces', etc.) as well as the array, name, and
-description. See class descriptions below for specific types of Attributes.
+All project elements include a list of `Attribute` objects. The base class defines
+the attribute location ('vertices', 'faces', etc.) as well as the name, description,
+metadata, and optional statuses for values that are null or invalid. The sub-classes
+each extend that with an `array` property of a different type and any other details
+needed to explain the values. See the class descriptions below for details.
 
 Mapping attribute array values to a mesh is straightforward for unstructured meshes
 (those defined by vertices, segments, triangles, etc); the order of the attribute
-array corresponds to the order of the associated mesh parameter.
-For grid meshes, however, mapping 1D attribute array to the 2D or 3D grid requires
-correctly ordered ijk unwrapping.
+array corresponds to the order of the associated mesh parameter. For grid meshes,
+however, mapping 1D attribute array to the 2D or 3D grid requires correctly ordered
+ijk unwrapping.
 
-NumericAttribute
-----------------
+Attribute Base Class
+--------------------
+
+.. autoclass:: omf.attribute.Attribute
+
+Numeric Attribute
+-----------------
 
 .. autoclass:: omf.attribute.NumericAttribute
 
-VectorAttribute
----------------
-
-.. autoclass:: omf.attribute.VectorAttribute
-
-StringAttribute
----------------
-
-.. autoclass:: omf.attribute.StringAttribute
-
-CategoryAttribute
------------------
-
-.. autoclass:: omf.attribute.CategoryAttribute
-
-ContinuousColormap
-------------------
-
 .. autoclass:: omf.attribute.ContinuousColormap
-
-DiscreteColormap
-----------------
 
 .. autoclass:: omf.attribute.DiscreteColormap
 
-CategoryColormap
+Vector Attribute
 ----------------
 
+.. autoclass:: omf.attribute.VectorAttribute
+
+Category Attribute
+------------------
+
+.. autoclass:: omf.attribute.CategoryAttribute
+
 .. autoclass:: omf.attribute.CategoryColormap
+
+String Attribute
+----------------
+
+.. autoclass:: omf.attribute.StringAttribute

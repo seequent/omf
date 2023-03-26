@@ -286,3 +286,115 @@ def test_basemodel_schema():
             schemas_seen.add(klass.schema)
         else:
             assert klass.schema == ""
+
+
+def test_no_status():
+    attr = omf.NumericAttribute(array=[1, 2, 3, 0, 5], location="vertices")
+    attr.validate()
+    assert attr.valid_mask() is None
+    np.testing.assert_array_equal(attr.valid_values(), [1, 2, 3, 0, 5])
+
+    attr = omf.VectorAttribute(array=[[1, 1], [2, 2], [3, 3], [0, 0], [0, 0]], location="vertices")
+    attr.validate()
+    assert attr.valid_mask() is None
+    np.testing.assert_array_equal(attr.valid_values(), [[1, 1], [2, 2], [3, 3], [0, 0], [0, 0]])
+
+    attr = omf.StringAttribute(array=["foo", "bar", "spam", "eggs"], location="vertices")
+    attr.validate()
+    assert attr.valid_mask() is None
+    assert attr.valid_values() == ["foo", "bar", "spam", "eggs"]
+
+
+def test_status():
+    attr = omf.NumericAttribute(
+        array=[1, 2, 3, 0, 5],
+        status=[False, False, False, True, False],
+        location="vertices",
+    )
+    attr.validate()
+    np.testing.assert_array_equal(attr.valid_mask(), [True, True, True, False, True])
+    np.testing.assert_array_equal(attr.valid_values(), [1, 2, 3, 5])
+
+    attr = omf.VectorAttribute(
+        array=[[1, 1], [2, 2], [3, 3], [0, 0], [0, 0]],
+        status=[0, 0, 0, 1, 2],
+        status_messages={2: "message here"},
+        location="vertices",
+    )
+    attr.validate()
+    np.testing.assert_array_equal(attr.valid_mask(), [True, True, True, False, False])
+    np.testing.assert_array_equal(attr.valid_values(), [[1, 1], [2, 2], [3, 3]])
+
+    attr = omf.StringAttribute(
+        array=["foo", "bar", "spam", "eggs"],
+        status=[0, 0, 0, 3],
+        status_messages={3: "error"},
+        location="vertices",
+    )
+    attr.validate()
+    np.testing.assert_array_equal(attr.valid_mask(), [True, True, True, False])
+    assert attr.valid_values() == ["foo", "bar", "spam"]
+
+
+def test_negative_status():
+    attr = omf.NumericAttribute(
+        array=[1, 2, 3, 0, 5],
+        status=[0, 0, 0, -1, 0],
+        location="vertices",
+    )
+    with pytest.raises(properties.ValidationError, match="statuses can't be negative"):
+        attr.validate()
+
+
+def test_missing_status_message():
+    attr = omf.NumericAttribute(
+        array=[1, 2, 3, 0, 5],
+        status=[0, 0, 0, 1, 2],
+        location="vertices",
+    )
+    with pytest.raises(properties.ValidationError, match="status without error string: 2"):
+        attr.validate()
+
+    attr = omf.NumericAttribute(
+        array=[1, 2, 3, 0, 5],
+        status=[0, 0, 0, 3, 2],
+        location="vertices",
+    )
+    with pytest.raises(properties.ValidationError, match="2 statuses without error strings: 2, 3"):
+        attr.validate()
+
+    attr = omf.NumericAttribute(
+        array=np.zeros(20),
+        status=np.arange(20),
+        status_messages={2: "foo"},
+        location="vertices",
+    )
+    with pytest.raises(properties.ValidationError, match=r"17 statuses without error strings: 3, 4, 5, 6, 7, \.\.\."):
+        attr.validate()
+
+
+def test_status_length_wrong():
+    attr = omf.NumericAttribute(
+        array=[1, 2, 3, 5],
+        status=[0, 0, 0, 1, 0],
+        location="vertices",
+    )
+    with pytest.raises(properties.ValidationError, match="status should have length 4 to match array, not 5"):
+        attr.validate()
+
+
+def test_message_for_invalid_status():
+    with pytest.raises(properties.ValidationError, match="status 1 is reserved for 'null'"):
+        attr = omf.NumericAttribute(
+            array=[1, 2, 3, 5],
+            status=[0, 0, 0, 1, 0],
+            status_messages={1: "estimation failed"},
+            location="vertices",
+        )
+    with pytest.raises(properties.ValidationError, match="statuses can't be negative"):
+        attr = omf.NumericAttribute(
+            array=[1, 2, 3, 5],
+            status=[0, 0, 0, 1, 0],
+            status_messages={-1: "estimation failed"},
+            location="vertices",
+        )

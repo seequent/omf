@@ -2,7 +2,7 @@
 import properties
 import properties.extras
 
-from .attribute import ProjectElementAttribute
+from .attribute import Attribute
 from .base import ArbitraryMetadataDict, BaseMetadata, ContentModel
 
 
@@ -33,7 +33,7 @@ class ProjectElement(ContentModel):
 
     attributes = properties.List(
         "Attributes defined on the element",
-        prop=ProjectElementAttribute,
+        prop=Attribute,
         required=False,
         default=list,
     )

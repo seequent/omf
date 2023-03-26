@@ -11,11 +11,6 @@ Available elements are :ref:`pointsets`, :ref:`linesets`, :ref:`surfaces`,
 
 .. autoclass:: omf.element.ProjectElement
 
-Project Element Attribute
--------------------------
-
-.. autoclass:: omf.element.ProjectElementAttribute
-
 Content Model
 -------------
 
