@@ -21,13 +21,13 @@ class UidModel(properties.HasProperties):
     )
     date_created = properties.GettableProperty(
         'Date project was created',
-        default=datetime.datetime.utcnow,
+        default=lambda: datetime.datetime.now(tz=datetime.timezone.utc),
         serializer=properties.DateTime.to_json,
         deserializer=lambda val, **kwargs: None
     )
     date_modified = properties.GettableProperty(
         'Date project was modified',
-        default=datetime.datetime.utcnow,
+        default=lambda: datetime.datetime.now(tz=datetime.timezone.utc),
         serializer=properties.DateTime.to_json,
         deserializer=lambda val, **kwargs: None
     )
@@ -35,7 +35,7 @@ class UidModel(properties.HasProperties):
     @properties.observer(properties.everything)
     def _modify(self, _):
         """Update date_modified whenever anything changes"""
-        self._backend['date_modified'] = datetime.datetime.utcnow()
+        self._backend['date_modified'] = datetime.datetime.now(tz=datetime.timezone.utc)
 
     @properties.validator
     def _update_date_modified(self):
